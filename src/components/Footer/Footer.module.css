@@ -1,5 +1,6 @@
 .footer {
-  background: var(--black);
+  border-top: 5px solid var(--flag-red);
+  background: var(--navy);
   color: var(--white);
   padding-top: clamp(3rem, 6vw, 4.5rem);
 }
@@ -20,7 +21,13 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
-  transition: transform 0.18s ease;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.logo:hover,
+.logo:focus-visible {
+  color: #ffb8c2;
+  transform: translateY(-1px);
 }
 
 .logoWrap {
@@ -49,7 +56,7 @@
 }
 
 .tagline {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--white);
   font-size: 0.95rem;
   max-width: 22rem;
 }
@@ -77,12 +84,12 @@
 }
 
 .col a {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--white);
   font-size: 0.95rem;
   transition: color 0.16s ease;
 }
 .col a:hover {
-  color: var(--white);
+  color: #ffb8c2;
 }
 
 .bottom {
@@ -92,13 +99,13 @@
   gap: 1rem;
   flex-wrap: wrap;
   padding-block: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
   font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--white);
 }
 
 .small {
-  color: rgba(255, 255, 255, 0.48);
+  color: var(--white);
 }
 
 @media (max-width: 720px) {
@@ -123,5 +130,43 @@
 
   .footer {
     padding-top: 2.25rem;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .footer {
+    border-top-width: 7px;
+  }
+
+  .tagline,
+  .col a,
+  .bottom,
+  .small {
+    color: var(--white);
+  }
+
+  .colHeading {
+    color: var(--white);
+  }
+}
+
+@media (forced-colors: active) {
+  .footer {
+    border-top: 5px solid CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .logo,
+  .tagline,
+  .colHeading,
+  .col a,
+  .bottom,
+  .small {
+    color: CanvasText;
+  }
+
+  .bottom {
+    border-top-color: CanvasText;
   }
 }

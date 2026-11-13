@@ -376,3 +376,42 @@
     animation: none;
   }
 }
+
+@media (prefers-contrast: more) {
+  .header {
+    border-bottom: 2px solid var(--navy);
+    background: #ffffff;
+  }
+
+  .searchInput,
+  .hamburgerButton {
+    border: 2px solid var(--navy);
+  }
+
+  .mobileMenuPanel {
+    border: 2px solid var(--navy);
+  }
+}
+
+@media (forced-colors: active) {
+  .header,
+  .mobileMenuPanel,
+  .searchInput,
+  .hamburgerButton {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+
+  .nav a,
+  .authLink,
+  .authLinkButton,
+  .mobileNav a {
+    color: LinkText;
+  }
+
+  .hamburgerLine {
+    background: ButtonText;
+  }
+}
