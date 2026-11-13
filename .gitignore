@@ -25,3 +25,4 @@ next-env.d.ts
 # from being tracked and accidentally exposed in version control.
 .env*
 *.log
+/src/generated/prisma
