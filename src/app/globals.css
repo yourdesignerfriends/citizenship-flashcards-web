@@ -1,0 +1,283 @@
+/* ==========================================================================
+  Hi team Analina here this is the global theme for Handcrafted Haven.
+  I followed a minimalist monochrome editorial direction.
+  ========================================================================== */
+
+:root {
+  /* I defined this color palette for a clean, high-contrast visual system. */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* I keep these typography fallbacks aligned with the next/font setup in layout.tsx. */
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, sans-serif;
+
+  /* I defined spacing and layout tokens here so components share consistent rhythm. */
+  --max-width: 1120px;
+  --radius: 14px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--black);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* I use this shared container utility to keep page content aligned and centered. */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* I added visible keyboard focus styles so interactive elements stay accessible. */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--black);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* I respect reduced-motion preferences by disabling animations and transitions here. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* I grouped shared utility classes here so common UI patterns stay reusable. */
+.surface-card {
+  background: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.text-muted {
+  color: var(--black);
+}
+
+/* ==========================================
+  Buttons
+  ========================================== */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.18s ease;
+}
+
+/* Variant 1: White background / Black text -> Pure inversion to Black/White on hover */
+.button--light {
+  background-color: var(--white);
+  color: var(--black);
+  border: 2px solid var(--black);
+}
+
+.button--light:hover {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+/* Variant 2: Black background / White text -> Pure inversion to White/Black on hover */
+.button--dark {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.button--dark:hover {
+  background-color: var(--white);
+  color: var(--black);
+  border: 2px solid var(--black);
+}
+
+/* I added these catalog card helpers to keep product cards consistent across pages. */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: var(--white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.product-card__contentLink {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--black);
+  box-shadow: 0 16px 30px -20px rgba(17, 17, 17, 0.35);
+}
+
+.product-card__image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.product-card__image-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.product-card__placeholder {
+  width: 100%;
+  height: 200px;
+  border-radius: 6px;
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  background: var(--white);
+  color: var(--black);
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+}
+
+.product-detail__image-wrap {
+  position: relative;
+  width: 100%;
+  height: min(60vw, 400px);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-card__title {
+  font-size: 1.2rem;
+  margin-top: 0.25rem;
+}
+
+.product-card__price {
+  font-weight: 700;
+}
+
+.product-card__ratingEmpty {
+  color: var(--black);
+  font-size: 0.92rem;
+}
+
+.product-card__actionForm {
+  margin-top: auto;
+}
+
+.product-card__actionButton {
+  width: 100%;
+}
+
+.product-card__stockBadge {
+  margin-top: auto;
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+  background: #fef2f2;
+  border-radius: 999px;
+  padding: 0.38rem 0.72rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* I created shared text helpers so headings and body copy keep a consistent tone. */
+.page-title {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.section-subtitle {
+  color: var(--black);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.section-copy {
+  color: var(--black);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .surface-card {
+    box-shadow: none;
+  }
+}

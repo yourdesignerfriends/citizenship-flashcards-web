@@ -1,0 +1,127 @@
+.footer {
+  background: var(--black);
+  color: var(--white);
+  padding-top: clamp(3rem, 6vw, 4.5rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding-bottom: 2.5rem;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  transition: transform 0.18s ease;
+}
+
+.logoWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoIcon {
+  width: 1rem;
+  height: 1rem;
+  opacity: 0.92;
+  filter: brightness(0) invert(1);
+  transition: opacity 0.18s ease, filter 0.18s ease, transform 0.18s ease;
+}
+
+.logo:hover .logoIcon,
+.logo:focus-visible .logoIcon {
+  opacity: 1;
+  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.82));
+  transform: scale(1.05);
+}
+
+.logo:active .logoIcon {
+  transform: scale(0.96);
+}
+
+.tagline {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+  max-width: 22rem;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.colHeading {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.col a {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  transition: color 0.16s ease;
+}
+.col a:hover {
+  color: var(--white);
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-block: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.small {
+  color: rgba(255, 255, 255, 0.48);
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cols {
+    gap: 1rem;
+  }
+
+  .bottom {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    padding-top: 2.25rem;
+  }
+}

@@ -1,0 +1,27 @@
+# I exclude the node_modules directory because I manage dependencies locally via npm and packages do not need to be tracked in version control.
+node_modules/
+
+# Next.js build output, cache and static export directories
+/.next/
+/out/
+
+# I ignore build and distribution folders so that compiled files generated during local development stay out of my GitHub repository.
+dist/
+build/
+
+# Vercel deployment directory
+.vercel/
+
+# I exclude macOS system files to keep my workspace clean of hidden metadata.
+.DS_Store
+Thumbs.db
+
+# TypeScript declaration cache and environment info
+*.tsbuildinfo
+next-env.d.ts
+
+# I exclude all environment files (starting with .env) to prevent 
+# sensitive configuration data, local API keys, and private credentials 
+# from being tracked and accidentally exposed in version control.
+.env*
+*.log
