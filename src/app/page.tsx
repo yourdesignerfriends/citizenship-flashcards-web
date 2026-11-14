@@ -2,35 +2,35 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import styles from "./page.module.css";
+import { prisma } from "@/lib/prisma";
 
-const categories = [
-  {
-    id: "american-government",
-    title: "American Government",
-    count: 4,
+export const dynamic = "force-dynamic";
+
+type CategoryPresentation = {
+  icon: "government" | "history" | "civics";
+  color: "navy" | "red" | "blue";
+  slug: string;
+};
+
+const categoryPresentation: Record<string, CategoryPresentation> = {
+  "American Government": {
     icon: "government",
     color: "navy",
+    slug: "american-government",
   },
-  {
-    id: "american-history",
-    title: "American History",
-    count: 1,
+  "American History": {
     icon: "history",
     color: "red",
+    slug: "american-history",
   },
-  {
-    id: "symbols-and-holidays",
-    title: "Symbols and Holidays",
-    count: 1,
+  "Symbols and Holidays": {
     icon: "civics",
     color: "blue",
+    slug: "symbols-and-holidays",
   },
-] as const;
+};
 
-type CategoryIconName = (typeof categories)[number]["icon"];
-type CategoryColor = (typeof categories)[number]["color"];
-
-function CategoryIcon({ name }: { name: CategoryIconName }) {
+function CategoryIcon({ name }: { name: CategoryPresentation["icon"] }) {
   if (name === "government") {
     return (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -73,7 +73,21 @@ function BookmarkIcon() {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const categories = await prisma.category.findMany({
+    where: {
+      name: { in: Object.keys(categoryPresentation) },
+    },
+    select: {
+      id: true,
+      name: true,
+      _count: {
+        select: { questions: true },
+      },
+    },
+    orderBy: { name: "asc" },
+  });
+
   return (
     <>
       <Navbar />
@@ -81,10 +95,10 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.content}>
           <header className={styles.intro}>
-            <p className={styles.version}>Development sample</p>
-            <h1 className={styles.introTitle}>6 Sample Civics Questions and Answers</h1>
+            <p className={styles.version}>U.S. Citizenship Civics Test</p>
+            <h1 className={styles.introTitle}>Civics Questions and Answers</h1>
             <p className={styles.introDescription}>
-              Explore a small sample for the U.S. naturalization civics test.
+              Study questions for the U.S. naturalization civics test.
             </p>
           </header>
 
@@ -94,28 +108,35 @@ export default function Home() {
             </h2>
 
             <div className={styles.cardList}>
-              {categories.map((category) => (
-                <Link
-                  key={category.id}
-                  href={`/flashcards?category=${category.id}`}
-                  className={styles.card}
-                >
-                  <span
-                    className={`${styles.iconBox} ${styles[category.color as CategoryColor]}`}
+              {categories.length === 0 && (
+                <p className={styles.emptyState}>No categories are available yet.</p>
+              )}
+              {categories.map((category) => {
+                const presentation = categoryPresentation[category.name];
+
+                return (
+                  <Link
+                    key={category.id}
+                    href={`/flashcards?category=${presentation.slug}`}
+                    className={styles.card}
                   >
-                    <CategoryIcon name={category.icon} />
-                  </span>
-                  <span className={styles.cardContent}>
-                    <span className={styles.cardTitle}>{category.title}</span>
-                    <span className={styles.cardDescription}>
-                      {category.count} questions
+                    <span
+                      className={`${styles.iconBox} ${styles[presentation.color]}`}
+                    >
+                      <CategoryIcon name={presentation.icon} />
                     </span>
-                  </span>
-                  <span className={styles.arrow}>
-                    <ChevronIcon />
-                  </span>
-                </Link>
-              ))}
+                    <span className={styles.cardContent}>
+                      <span className={styles.cardTitle}>{category.name}</span>
+                      <span className={styles.cardDescription}>
+                        {category._count.questions} questions
+                      </span>
+                    </span>
+                    <span className={styles.arrow}>
+                      <ChevronIcon />
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </section>
 
