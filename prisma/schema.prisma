@@ -1,27 +1,27 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// I generate the Prisma Client from this schema.
 
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
 
+// I use PostgreSQL to store my app's data.
 datasource db {
   provider = "postgresql"
 }
 
+// I group my civics questions into categories.
 model Category {
-  id        Int        @id @default(autoincrement())
+  id        Int        @id @default(autoincrement()) // I use this field as the unique ID, and I let the database assign the next number automatically.
   name      String
   questions Question[]
 }
 
+// I store every acceptable answer because a question can have multiple valid answers.
 model Question {
   id         Int      @id @default(autoincrement())
   question   String
-  answer     String
+  answers    String[]
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }

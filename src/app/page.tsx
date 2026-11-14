@@ -7,21 +7,21 @@ const categories = [
   {
     id: "american-government",
     title: "American Government",
-    count: 57,
+    count: 4,
     icon: "government",
     color: "navy",
   },
   {
     id: "american-history",
     title: "American History",
-    count: 30,
+    count: 1,
     icon: "history",
     color: "red",
   },
   {
-    id: "integrated-civics",
-    title: "Integrated Civics",
-    count: 13,
+    id: "symbols-and-holidays",
+    title: "Symbols and Holidays",
+    count: 1,
     icon: "civics",
     color: "blue",
   },
@@ -80,10 +80,18 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.content}>
+          <header className={styles.intro}>
+            <p className={styles.version}>Development sample</p>
+            <h1 className={styles.introTitle}>6 Sample Civics Questions and Answers</h1>
+            <p className={styles.introDescription}>
+              Explore a small sample for the U.S. naturalization civics test.
+            </p>
+          </header>
+
           <section className={styles.section} aria-labelledby="categories-heading">
-            <h1 className={styles.sectionTitle} id="categories-heading">
+            <h2 className={styles.sectionTitle} id="categories-heading">
               Categories
-            </h1>
+            </h2>
 
             <div className={styles.cardList}>
               {categories.map((category) => (
@@ -123,7 +131,7 @@ export default function Home() {
                 </span>
                 <span className={styles.cardContent}>
                   <span className={styles.cardTitle}>My Saved Cards</span>
-                  <span className={styles.cardDescription}>7 saved questions</span>
+                  <span className={styles.cardDescription}>0 saved questions</span>
                 </span>
                 <span className={styles.arrow}>
                   <ChevronIcon />

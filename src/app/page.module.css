@@ -28,6 +28,49 @@
   margin-inline: auto;
 }
 
+.intro {
+  margin-bottom: 2rem;
+  padding: 0.25rem 0 1.35rem;
+  border-bottom: 2px solid rgba(23, 43, 87, 0.18);
+}
+
+.version {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.4rem;
+  color: var(--flag-red);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.version::before {
+  width: 1.5rem;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--flag-red);
+  content: "";
+}
+
+.introTitle {
+  margin-bottom: 0.5rem;
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 5vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.12;
+}
+
+.introDescription {
+  max-width: 36rem;
+  color: #30394b;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
 .section + .section {
   margin-top: 1.65rem;
 }
@@ -168,6 +211,10 @@
     padding-block: 2.5rem 4rem;
   }
 
+  .intro {
+    margin-bottom: 2.5rem;
+  }
+
   .section + .section {
     margin-top: 2rem;
   }
@@ -186,7 +233,6 @@
   .cardTitle {
     font-size: 0.92rem;
   }
-
 }
 
 @media (max-width: 699px) {
@@ -207,6 +253,14 @@
 }
 
 @media (prefers-contrast: more) {
+  .intro {
+    border-bottom: 3px solid var(--navy);
+  }
+
+  .introDescription {
+    color: #000;
+  }
+
   .card {
     border: 2px solid var(--navy);
     border-left-width: 6px;
@@ -236,9 +290,16 @@
   }
 
   .sectionTitle,
+  .introTitle,
+  .version,
+  .introDescription,
   .cardTitle,
   .cardDescription {
     color: CanvasText;
+  }
+
+  .intro {
+    border-bottom: 2px solid CanvasText;
   }
 
   .sectionTitle::after {

@@ -1,71 +1,103 @@
+import "dotenv/config";
 import { prisma } from "../src/lib/prisma";
 
+const categories = [
+  {
+    name: "American Government",
+    questions: [
+      {
+        question: "What is the form of government of the United States?",
+        answers: ["A republic"],
+      },
+      {
+        question: "What is the supreme law of the land?",
+        answers: ["The Constitution"],
+      },
+      {
+        question: "What is the economic system of the United States?",
+        answers: ["A capitalist economy"],
+      },
+      {
+        question:
+          "The U.S. Constitution starts with the words “We the People.” What does “We the People” mean?",
+        answers: [
+          "Self-government",
+          "Popular sovereignty",
+          "Consent of the governed",
+          "People should govern themselves",
+          "(Example of) social contract",
+        ],
+      },
+    ],
+  },
+  {
+    name: "American History",
+    questions: [
+      {
+        question: "Who lived in America before the Europeans arrived?",
+        answers: ["American Indians"],
+      },
+    ],
+  },
+  {
+    name: "Symbols and Holidays",
+    questions: [
+      {
+        question: "What is the capital of the United States?",
+        answers: ["Washington, D.C."],
+      },
+    ],
+  },
+];
+
 async function main() {
-    console.log("Starting citizenship flashcards database seed...");
+  console.log("Seeding sample civics questions...");
 
-    // Hi, I'm Analina. Before inserting new data, I clear the existing tables to avoid duplicates.
-    await prisma.question.deleteMany({});
-    await prisma.category.deleteMany({});
+  await prisma.$transaction(async (transaction) => {
+    for (const seedCategory of categories) {
+      const existingCategory = await transaction.category.findFirst({
+        where: { name: seedCategory.name },
+      });
 
-    // 1. Create Categories and associate their respective flashcards
-    await prisma.category.create({
-        data: {
-        name: "American Government",
-        questions: {
-            create: [
-            {
-                question: "What is the form of government of the United States?",
-                answer: "Republic",
-            },
-            {
-                question: "What is the supreme law of the land?",
-                answer: "The Constitution",
-            },
-            {
-                question: "What is the economic system of the United States?",
-                answer: "Capitalism",
-            },
-            ],
-        },
-        },
-    });
+      const category =
+        existingCategory ??
+        (await transaction.category.create({
+          data: { name: seedCategory.name },
+        }));
 
-    await prisma.category.create({
-        data: {
-        name: "American History",
-        questions: {
-            create: [
-            {
-                question: "Who lived in America before the Europeans arrived?",
-                answer: "Native Americans",
-            },
-            ],
-        },
-        },
-    });
+      for (const seedQuestion of seedCategory.questions) {
+        const existingQuestion = await transaction.question.findFirst({
+          where: {
+            categoryId: category.id,
+            question: seedQuestion.question,
+          },
+        });
 
-    await prisma.category.create({
-        data: {
-        name: "Symbols and Holidays",
-        questions: {
-            create: [
-            {
-                question: "What is the capital of the United States?",
-                answer: "Washington, D.C.",
+        if (existingQuestion) {
+          await transaction.question.update({
+            where: { id: existingQuestion.id },
+            data: { answers: seedQuestion.answers },
+          });
+        } else {
+          await transaction.question.create({
+            data: {
+              ...seedQuestion,
+              categoryId: category.id,
             },
-            ],
-        },
-        },
-    });
-
-    console.log("Citizenship flashcards seeded successfully into PostgreSQL!");
+          });
+        }
+      }
     }
+  });
 
-    main()
-    .catch((err) => {
-        console.error("Error during seeding:", err);
-        process.exit(1);
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
+  console.log("Sample civics questions seeded successfully.");
+}
+
+main()
+  .catch((error: unknown) => {
+    console.error("Failed to seed sample civics questions:", error);
+    process.exitCode = 1;
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
