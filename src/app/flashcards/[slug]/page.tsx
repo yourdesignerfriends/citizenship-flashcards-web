@@ -2,7 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { getCategoryBySlug } from "@/lib/data/categories";
+import {
+  getCategories,
+  getCategoryBySlug,
+} from "@/lib/data/categories";
 import styles from "./page.module.css";
 
 type CategoryFlashcardsPageProps = {
@@ -13,7 +16,10 @@ export default async function CategoryFlashcardsPage({
   params,
 }: CategoryFlashcardsPageProps) {
   const { slug } = await params;
-  const category = await getCategoryBySlug(slug);
+  const [category, categories] = await Promise.all([
+    getCategoryBySlug(slug),
+    getCategories(),
+  ]);
 
   if (!category) {
     notFound();
@@ -21,7 +27,7 @@ export default async function CategoryFlashcardsPage({
 
   return (
     <>
-      <Navbar />
+      <Navbar categories={categories} />
 
       <main className={styles.main}>
         <div className={styles.content}>

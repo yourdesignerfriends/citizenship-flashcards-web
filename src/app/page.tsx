@@ -20,7 +20,7 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar categories={categories ?? []} />
 
       <main className={styles.main}>
         <div className={styles.content}>
