@@ -4,6 +4,7 @@ import { prisma } from "../src/lib/prisma";
 const categories = [
   {
     name: "American Government",
+    slug: "american-government",
     questions: [
       {
         question: "What is the form of government of the United States?",
@@ -32,6 +33,7 @@ const categories = [
   },
   {
     name: "American History",
+    slug: "american-history",
     questions: [
       {
         question: "Who lived in America before the Europeans arrived?",
@@ -41,6 +43,7 @@ const categories = [
   },
   {
     name: "Symbols and Holidays",
+    slug: "symbols-and-holidays",
     questions: [
       {
         question: "What is the capital of the United States?",
@@ -55,15 +58,14 @@ async function main() {
 
   await prisma.$transaction(async (transaction) => {
     for (const seedCategory of categories) {
-      const existingCategory = await transaction.category.findFirst({
-        where: { name: seedCategory.name },
+      const category = await transaction.category.upsert({
+        where: { slug: seedCategory.slug },
+        create: {
+          name: seedCategory.name,
+          slug: seedCategory.slug,
+        },
+        update: { name: seedCategory.name },
       });
-
-      const category =
-        existingCategory ??
-        (await transaction.category.create({
-          data: { name: seedCategory.name },
-        }));
 
       for (const seedQuestion of seedCategory.questions) {
         const existingQuestion = await transaction.question.findFirst({

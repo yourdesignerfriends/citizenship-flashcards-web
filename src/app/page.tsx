@@ -4,33 +4,30 @@ import Footer from "@/components/Footer/Footer";
 import styles from "./page.module.css";
 import { prisma } from "@/lib/prisma";
 
+// I force dynamic rendering to ensure the page queries
+// the database on every request and avoids caching issues on Vercel.
 export const dynamic = "force-dynamic";
 
-type CategoryPresentation = {
-  icon: "government" | "history" | "civics";
-  color: "navy" | "red" | "blue";
-  slug: string;
-};
-
-const categoryPresentation: Record<string, CategoryPresentation> = {
-  "American Government": {
+const categoryPresentation = {
+  "american-government": {
     icon: "government",
     color: "navy",
-    slug: "american-government",
   },
-  "American History": {
+  "american-history": {
     icon: "history",
     color: "red",
-    slug: "american-history",
   },
-  "Symbols and Holidays": {
+  "symbols-and-holidays": {
     icon: "civics",
     color: "blue",
-    slug: "symbols-and-holidays",
   },
-};
+} as const;
 
-function CategoryIcon({ name }: { name: CategoryPresentation["icon"] }) {
+function CategoryIcon({
+  name,
+}: {
+  name: (typeof categoryPresentation)[keyof typeof categoryPresentation]["icon"];
+}) {
   if (name === "government") {
     return (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -76,11 +73,12 @@ function BookmarkIcon() {
 export default async function Home() {
   const categories = await prisma.category.findMany({
     where: {
-      name: { in: Object.keys(categoryPresentation) },
+      slug: { in: Object.keys(categoryPresentation) },
     },
     select: {
       id: true,
       name: true,
+      slug: true,
       _count: {
         select: { questions: true },
       },
@@ -112,12 +110,15 @@ export default async function Home() {
                 <p className={styles.emptyState}>No categories are available yet.</p>
               )}
               {categories.map((category) => {
-                const presentation = categoryPresentation[category.name];
+                const presentation =
+                  categoryPresentation[
+                    category.slug as keyof typeof categoryPresentation
+                  ];
 
                 return (
                   <Link
                     key={category.id}
-                    href={`/flashcards?category=${presentation.slug}`}
+                    href={`/flashcards/${category.slug}`}
                     className={styles.card}
                   >
                     <span

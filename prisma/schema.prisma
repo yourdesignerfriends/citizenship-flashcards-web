@@ -14,6 +14,8 @@ datasource db {
 model Category {
   id        Int        @id @default(autoincrement()) // I use this field as the unique ID, and I let the database assign the next number automatically.
   name      String
+  // I keep this URL identifier stable even if I rename the category.
+  slug      String     @unique
   questions Question[]
 }
 
