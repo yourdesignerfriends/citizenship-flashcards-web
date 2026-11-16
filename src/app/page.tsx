@@ -1,90 +1,22 @@
-import Link from "next/link";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import Card from "@/components/Card/Card";
+import { getCategories } from "@/lib/data/categories";
 import styles from "./page.module.css";
-import { prisma } from "@/lib/prisma";
 
-// I force dynamic rendering to ensure the page queries
-// the database on every request and avoids caching issues on Vercel.
+// I render this page for each request so I can show the latest database categories.
 export const dynamic = "force-dynamic";
 
-const categoryPresentation = {
-  "american-government": {
-    icon: "government",
-    color: "navy",
-  },
-  "american-history": {
-    icon: "history",
-    color: "red",
-  },
-  "symbols-and-holidays": {
-    icon: "civics",
-    color: "blue",
-  },
-} as const;
-
-function CategoryIcon({
-  name,
-}: {
-  name: (typeof categoryPresentation)[keyof typeof categoryPresentation]["icon"];
-}) {
-  if (name === "government") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M3 9h18L12 4 3 9Z" />
-        <path d="M5 10v8m4-8v8m6-8v8m4-8v8M3 20h18" />
-      </svg>
-    );
-  }
-
-  if (name === "history") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M6 4.5A2.5 2.5 0 0 1 8.5 2H19v17H8.5A2.5 2.5 0 0 0 6 21.5v-17Z" />
-        <path d="M6 5v16m2-2h11M9 6h6" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M3.5 9h17M4 15h16M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z" />
-    </svg>
-  );
-}
-
-function ChevronIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="m9 5 7 7-7 7" />
-    </svg>
-  );
-}
-
-function BookmarkIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-4-6 4V4.5Z" />
-    </svg>
-  );
-}
-
 export default async function Home() {
-  const categories = await prisma.category.findMany({
-    where: {
-      slug: { in: Object.keys(categoryPresentation) },
-    },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      _count: {
-        select: { questions: true },
-      },
-    },
-    orderBy: { name: "asc" },
-  });
+  // I load the categories before rendering the page so I can display them below.
+  // I use null to represent a failed query; on success, I store the category list here.
+  let categories: Awaited<ReturnType<typeof getCategories>> | null = null;
+
+  try {
+    categories = await getCategories();
+  } catch (error) {
+    console.error("I couldn't load the homepage categories:", error);
+  }
 
   return (
     <>
@@ -100,65 +32,31 @@ export default async function Home() {
             </p>
           </header>
 
-          <section className={styles.section} aria-labelledby="categories-heading">
+          <section aria-labelledby="categories-heading">
             <h2 className={styles.sectionTitle} id="categories-heading">
               Categories
             </h2>
 
             <div className={styles.cardList}>
-              {categories.length === 0 && (
-                <p className={styles.emptyState}>No categories are available yet.</p>
-              )}
-              {categories.map((category) => {
-                const presentation =
-                  categoryPresentation[
-                    category.slug as keyof typeof categoryPresentation
-                  ];
-
-                return (
-                  <Link
+              {categories === null ? (
+                <p className={styles.emptyState} role="alert">
+                  We couldn&apos;t load categories right now. Please try again
+                  later.
+                </p>
+              ) : categories.length > 0 ? (
+                categories.map((category) => (
+                  <Card
                     key={category.id}
                     href={`/flashcards/${category.slug}`}
-                    className={styles.card}
-                  >
-                    <span
-                      className={`${styles.iconBox} ${styles[presentation.color]}`}
-                    >
-                      <CategoryIcon name={presentation.icon} />
-                    </span>
-                    <span className={styles.cardContent}>
-                      <span className={styles.cardTitle}>{category.name}</span>
-                      <span className={styles.cardDescription}>
-                        {category._count.questions} questions
-                      </span>
-                    </span>
-                    <span className={styles.arrow}>
-                      <ChevronIcon />
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-
-          <section className={styles.section} aria-labelledby="saved-heading">
-            <h2 className={styles.sectionTitle} id="saved-heading">
-              Saved Cards
-            </h2>
-
-            <div className={styles.cardList}>
-              <Link href="/bookmarks" className={styles.card}>
-                <span className={`${styles.iconBox} ${styles.red}`}>
-                  <BookmarkIcon />
-                </span>
-                <span className={styles.cardContent}>
-                  <span className={styles.cardTitle}>My Saved Cards</span>
-                  <span className={styles.cardDescription}>0 saved questions</span>
-                </span>
-                <span className={styles.arrow}>
-                  <ChevronIcon />
-                </span>
-              </Link>
+                    title={category.name}
+                    description={`${category._count.questions} questions`}
+                  />
+                ))
+              ) : (
+                <p className={styles.emptyState}>
+                  No categories are available yet.
+                </p>
+              )}
             </div>
           </section>
         </div>
