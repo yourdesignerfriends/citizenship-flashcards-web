@@ -1,0 +1,43 @@
+.motivation {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 1.25rem;
+  color: #30394b;
+  line-height: 1.6;
+}
+
+.message {
+  display: grid;
+  justify-items: start;
+  gap: 1.25rem;
+}
+
+.illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.85rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.18s ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  background: #243d73;
+}
+
+@media (max-width: 699px) {
+  .motivation {
+    grid-template-columns: 1fr;
+  }
+}
