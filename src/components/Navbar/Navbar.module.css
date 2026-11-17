@@ -19,9 +19,12 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.5rem;
   padding: 0.25rem;
   flex-shrink: 0;
+  color: var(--navy);
+  font-size: 1.3rem;
+  font-weight: 600;
   transition: transform 0.18s ease;
 }
 
@@ -52,12 +55,28 @@
 }
 
 .nav a {
+  position: relative;
+  display: inline-block;
   color: var(--black);
   padding: 0.35rem 0;
-  transition: color 0.18s ease;
 }
-.nav a:hover {
-  color: var(--black);
+
+.nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.18s ease;
+}
+
+.nav a:hover::after,
+.nav a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .actions {

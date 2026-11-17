@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <>
+    <div data-page-background="none">
       <PageHero
         kicker="U.S. Citizenship Flashcards"
         title="Civics Questions and Answers"
@@ -36,6 +36,6 @@ export default function HomePage() {
           sizes="(max-width: 699px) 100vw, 50vw"
         />
       </section>
-    </>
+    </div>
   );
 }

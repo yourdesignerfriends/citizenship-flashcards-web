@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
@@ -12,7 +13,8 @@ export default function Navbar() {
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.logo} aria-label="US Citizenship Flashcards, home">
-          US Citizenship
+          <Image src="/flag.svg" alt="" width={28} height={20} />
+          US Citizenship Flashcards
         </Link>
 
         {/* Desktop Navigation */}
