@@ -1,0 +1,35 @@
+.main {
+  position: relative;
+  min-height: calc(100vh - 64px);
+  padding: 1.75rem 1rem 3rem;
+  border-top: 4px solid var(--flag-red);
+  background: var(--soft-blue);
+}
+
+.main::before {
+  position: absolute;
+  inset: 0;
+  background: url("/liberty.png") no-repeat right bottom / auto 100%;
+  content: "";
+  opacity: 0.14;
+  pointer-events: none;
+  mask-image: linear-gradient(to left, #000 35%, transparent 100%);
+}
+
+.content {
+  position: relative;
+  width: min(100%, 46rem);
+  margin-inline: auto;
+}
+
+@media (max-width: 699px) {
+  .main {
+    padding-block: 2rem 3rem;
+    padding-inline: 0.75rem;
+  }
+
+  .main::before {
+    background-size: auto 62%;
+    opacity: 0.1;
+  }
+}

@@ -1,18 +1,11 @@
 import Link from "next/link";
 import styles from "./Navbar.module.css";
 
-type NavbarProps = {
-  categories: { name: string; slug: string }[];
-};
-
-export default function Navbar({ categories }: NavbarProps) {
+export default function Navbar() {
   // Hi, I'm Analina. Rendering a clean and responsive navigation bar for the citizenship app.
   const navLinks = [
     { href: "/", label: "Home" },
-    ...categories.map((category) => ({
-      href: `/flashcards/${category.slug}`,
-      label: category.name,
-    })),
+    { href: "/categories", label: "Categories" },
   ];
 
   return (

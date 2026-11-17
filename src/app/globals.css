@@ -2,93 +2,34 @@
   --white: #ffffff;
   --black: #000000;
   --navy: #172b57;
-  --flag-blue: #3c3b6e;
   --flag-red: #b22234;
   --soft-blue: #eef1f8;
   --max-width: 1120px;
   --gutter: clamp(1.25rem, 4vw, 3rem);
 }
 
+/* I make sizing predictable and remove
+browser-default spacing from every element. */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  overflow-x: hidden;
-  background: var(--white);
-  color: var(--black);
-  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
 h1,
 h2,
 h3 {
   color: var(--navy);
-  font-family: var(--font-display), Georgia, "Times New Roman", serif;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  line-height: 1.1;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
-
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
+/* I use this class in the header and footer to center their content,
+limit its width, and add consistent side spacing. */
 .container {
   width: 100%;
-  max-width: var(--max-width);
+  max-width: var(--max-width, 1120px);
   margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-
-:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
-  outline: 3px solid var(--flag-blue);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-@media (prefers-contrast: more) {
-  :root {
-    --soft-blue: #ffffff;
-  }
-
-  body {
-    color: #000000;
-  }
-
-  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
-    outline-color: #000000;
-    outline-width: 4px;
-  }
-}
-
-@media (forced-colors: active) {
-  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
-    outline: 3px solid Highlight;
-    outline-offset: 3px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+  padding-inline: var(--gutter, clamp(1.25rem, 4vw, 3rem));
 }

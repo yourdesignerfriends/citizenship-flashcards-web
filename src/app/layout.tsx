@@ -1,53 +1,27 @@
-import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
+import { siteMetadata } from "@/config/site";
+import styles from "./layout.module.css";
 import "./globals.css";
 
-// I chose this display face to give headlines and brand moments an elegant serif style.
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-display",
-  display: "swap",
-});
+// I import my shared site metadata and export it under the name Next.js recognizes.
+export const metadata = siteMetadata;
 
-// I chose this body face to keep UI text and long reading sections clean and modern.
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-// I configured this metadata so Next.js can build title, meta, and social tags for SEO.
-export const metadata: Metadata = {
-  title: "US Citizenship Flashcards — Study for the Civics Test",
-  description:
-    "An interactive study web app designed to help you prepare for the U.S. Citizenship Civics Test with ease, featuring flashcards, categories, and bookmarks.",
-  keywords: [
-    "US citizenship",
-    "civics test",
-    "flashcards",
-    "naturalization",
-    "American government",
-    "American history",
-  ],
-  openGraph: {
-    title: "US Citizenship Flashcards",
-    description:
-      "Interactive flashcards and study tools to master the U.S. Citizenship Civics Test.",
-    type: "website",
-  },
-};
-
+// I wrap the current page, passed in as children, with the shared navigation and footer.
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
-      <body>{children}</body>
+    <html lang="en">
+      <body>
+        <Navbar/>
+        <main className={styles.main}>
+          <div className={styles.content}>{children}</div>
+        </main>
+        <Footer/>
+      </body>
     </html>
   );
 }

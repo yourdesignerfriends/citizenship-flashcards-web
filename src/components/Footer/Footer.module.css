@@ -13,7 +13,6 @@
 }
 
 .logo {
-  font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 600;
   color: var(--white);
@@ -21,38 +20,28 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
-  transition: color 0.18s ease, transform 0.18s ease;
+  position: relative;
 }
 
-.logo:hover,
-.logo:focus-visible {
-  color: #ffb8c2;
-  transform: translateY(-1px);
+.logo::after,
+.col a::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.2em;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.18s ease;
 }
 
-.logoWrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logoIcon {
-  width: 1rem;
-  height: 1rem;
-  opacity: 0.92;
-  filter: brightness(0) invert(1);
-  transition: opacity 0.18s ease, filter 0.18s ease, transform 0.18s ease;
-}
-
-.logo:hover .logoIcon,
-.logo:focus-visible .logoIcon {
-  opacity: 1;
-  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.82));
-  transform: scale(1.05);
-}
-
-.logo:active .logoIcon {
-  transform: scale(0.96);
+.logo:hover::after,
+.logo:focus-visible::after,
+.col a:hover::after,
+.col a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .tagline {
@@ -68,11 +57,10 @@
 }
 
 .colHeading {
-  font-family: var(--font-body);
+  color: var(--white);
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--white);
   margin-bottom: 1rem;
 }
 
@@ -84,12 +72,10 @@
 }
 
 .col a {
+  display: inline-block;
+  position: relative;
   color: var(--white);
   font-size: 0.95rem;
-  transition: color 0.16s ease;
-}
-.col a:hover {
-  color: #ffb8c2;
 }
 
 .bottom {
@@ -101,10 +87,6 @@
   padding-block: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.24);
   font-size: 0.88rem;
-  color: var(--white);
-}
-
-.small {
   color: var(--white);
 }
 
@@ -130,43 +112,5 @@
 
   .footer {
     padding-top: 2.25rem;
-  }
-}
-
-@media (prefers-contrast: more) {
-  .footer {
-    border-top-width: 7px;
-  }
-
-  .tagline,
-  .col a,
-  .bottom,
-  .small {
-    color: var(--white);
-  }
-
-  .colHeading {
-    color: var(--white);
-  }
-}
-
-@media (forced-colors: active) {
-  .footer {
-    border-top: 5px solid CanvasText;
-    background: Canvas;
-    color: CanvasText;
-  }
-
-  .logo,
-  .tagline,
-  .colHeading,
-  .col a,
-  .bottom,
-  .small {
-    color: CanvasText;
-  }
-
-  .bottom {
-    border-top-color: CanvasText;
   }
 }

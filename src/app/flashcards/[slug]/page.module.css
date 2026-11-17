@@ -1,15 +1,3 @@
-.main {
-  min-height: calc(100vh - 64px);
-  padding: 1.75rem 1rem 3rem;
-  border-top: 4px solid var(--flag-red);
-  background: var(--soft-blue);
-}
-
-.content {
-  width: min(100%, 46rem);
-  margin-inline: auto;
-}
-
 .backLink {
   display: inline-block;
   margin-bottom: 1.25rem;
@@ -17,33 +5,6 @@
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 0.2em;
-}
-
-.intro {
-  margin-bottom: 2rem;
-  padding-bottom: 1.35rem;
-  border-bottom: 2px solid rgba(23, 43, 87, 0.18);
-}
-
-.kicker {
-  margin-bottom: 0.4rem;
-  color: var(--flag-red);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.title {
-  margin-bottom: 0.5rem;
-  color: var(--navy);
-  font-size: clamp(1.7rem, 5vw, 2.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-}
-
-.description {
-  color: #30394b;
 }
 
 .questionList {
@@ -108,7 +69,6 @@
 .answerTitle {
   margin-bottom: 0.5rem;
   color: var(--navy);
-  font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 700;
 }
@@ -126,67 +86,4 @@
   border-radius: 0.75rem;
   background: #fff;
   color: var(--navy);
-}
-
-@media (min-width: 700px) {
-  .main {
-    padding-block: 2.5rem 4rem;
-  }
-
-  .intro {
-    margin-bottom: 2.5rem;
-  }
-}
-
-@media (prefers-contrast: more) {
-  .intro {
-    border-bottom: 3px solid var(--navy);
-  }
-
-  .flashcard {
-    border: 2px solid var(--navy);
-    border-left-width: 6px;
-    box-shadow: none;
-  }
-
-  .answer {
-    border-top: 2px solid var(--navy);
-    background: #fff;
-  }
-}
-
-@media (forced-colors: active) {
-  .main {
-    border-top-color: CanvasText;
-    background: Canvas;
-  }
-
-  .backLink,
-  .kicker,
-  .title,
-  .description,
-  .question,
-  .questionNumber,
-  .showAnswer,
-  .hideAnswer,
-  .answerTitle,
-  .answerList {
-    color: CanvasText;
-  }
-
-  .intro {
-    border-bottom-color: CanvasText;
-  }
-
-  .flashcard {
-    border: 1px solid CanvasText;
-    border-left: 5px solid LinkText;
-    background: Canvas;
-    box-shadow: none;
-  }
-
-  .answer {
-    border-top-color: CanvasText;
-    background: Canvas;
-  }
 }

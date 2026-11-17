@@ -1,0 +1,12 @@
+.cardList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.emptyState {
+  padding: 1rem;
+  border: 1px solid rgba(23, 43, 87, 0.2);
+  border-radius: 0.75rem;
+  background: #fff;
+  color: var(--navy);
+}

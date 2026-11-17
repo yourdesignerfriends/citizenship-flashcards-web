@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Footer.module.css";
 
 const columns = [
@@ -6,23 +7,16 @@ const columns = [
     heading: "Study",
     links: [
       { label: "Home", href: "/" },
-      { label: "Flashcards", href: "/flashcards" },
-      { label: "Bookmarks", href: "/bookmarks" },
+      { label: "Categories", href: "/categories" },
     ],
   },
   {
     heading: "Resources",
-    links: [
-      { label: "USCIS Official", href: "https://www.uscis.gov" },
-      { label: "Study Guide", href: "/flashcards" },
-    ],
+    links: [{ label: "USCIS Official", href: "https://www.uscis.gov" }],
   },
   {
     heading: "About",
-    links: [
-      { label: "Citizenship Prep", href: "/" },
-      { label: "My Progress", href: "/bookmarks" },
-    ],
+    links: [{ label: "The Developer", href: "/about" }],
   },
 ];
 
@@ -33,6 +27,7 @@ export default function Footer() {
       <div className={`container ${styles.grid}`}>
         <div className={styles.brand}>
           <Link href="/" className={styles.logo}>
+            <Image src="/flag.svg" alt="" width={28} height={20} />
             US Citizenship Flashcards
           </Link>
           <p className={styles.tagline}>
@@ -57,8 +52,8 @@ export default function Footer() {
       </div>
 
       <div className={`container ${styles.bottom}`}>
-        <p>&copy; 2026 US Citizenship Flashcards. Built by Analina Del Vecchio.</p>
-        <p className={styles.small}>CSE 310 · Web Apps Module</p>
+        <p>&copy; 2026 US Citizenship Flashcards. Built by Analina Nielsen</p>
+        <p>All Rights Reserved</p>
       </div>
     </footer>
   );
