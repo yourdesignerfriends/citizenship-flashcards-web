@@ -29,7 +29,7 @@ export default function HomePage() {
         </div>
         <Image
           className={styles.illustration}
-          src="/civics-study-illustration.png"
+          src="/happy.png"
           alt="Illustration of a student preparing for the civics test and moving toward the U.S. Capitol"
           width={1152}
           height={768}
