@@ -1,5 +1,30 @@
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.photo {
+  width: min(100%, 16rem);
+  height: auto;
+  border-radius: 1rem;
+  object-fit: cover;
+}
+
 .story {
-  max-width: 42rem;
+  max-width: 30rem;
   color: #30394b;
   line-height: 1.7;
+}
+
+@media (max-width: 699px) {
+  .profile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .photo {
+    width: min(100%, 12rem);
+  }
 }
