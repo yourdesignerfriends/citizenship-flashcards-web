@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
-  // Hi, I'm Analina. Rendering a clean and responsive navigation bar for the citizenship app.
+  // I keep one link list so my desktop and mobile menus stay in sync.
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/categories", label: "Categories" },
@@ -17,7 +17,7 @@ export default function Navbar() {
           US Citizenship Flashcards
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* I show the primary links directly on wider screens. */}
         <nav className={styles.nav} aria-label="Primary">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} className={styles.navItem}>
@@ -26,7 +26,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Mobile Hamburger Menu */}
+        {/* I use a native details element to reveal the navigation on smaller screens. */}
         <div className={styles.actions}>
           <details className={styles.mobileMenu}>
             <summary className={styles.hamburgerButton} aria-label="Toggle navigation menu">

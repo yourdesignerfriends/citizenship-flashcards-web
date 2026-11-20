@@ -13,10 +13,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // I set the document language to English so browsers and assistive technologies can interpret the content correctly.
   return (
     <html lang="en">
       <body>
         <Navbar/>
+        {/* I place each page's content in the main landmark, between the shared navigation and footer. */}
         <main className={styles.main}>
           <div className={styles.content}>{children}</div>
         </main>

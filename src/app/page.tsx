@@ -1,6 +1,10 @@
+// I use Next.js Link to navigate to the categories page without a full page reload.
 import Link from "next/link";
+// I use Next.js Image to size and optimize the homepage illustration.
 import Image from "next/image";
+// I reuse the shared hero component to introduce the homepage.
 import PageHero from "@/components/PageHero/PageHero";
+// I import the styles that are specific to this page.
 import styles from "./page.module.css";
 
 // I define this page's title and description so browsers and search engines can identify and summarize it.
@@ -11,6 +15,7 @@ export const metadata = {
     "Prepare for the U.S. naturalization civics test with confidence. Every question you study brings you closer to your goal.",
 };
 
+// I define the component that renders the homepage content.
 export default function HomePage() {
   return (
     <>
@@ -20,7 +25,9 @@ export default function HomePage() {
         title="Civics Questions and Answers"
         description="Study questions for the U.S. naturalization civics test."
       />
+      {/* I group the motivational message, illustration, and study link into one section. */}
       <section className={styles.motivation} aria-label="Start studying">
+        {/* I describe the illustration for screen readers and provide its dimensions and responsive sizes. */}
         <Image
           className={styles.illustration}
           src="/happy.png"
@@ -29,6 +36,7 @@ export default function HomePage() {
           height={768}
           sizes="(max-width: 699px) 100vw, 50vw"
         />
+        {/* I encourage visitors to study and give them a clear path to the categories. */}
         <div className={styles.message}>
           <p>
             Every question you study today is a step closer to your goal. Prepare

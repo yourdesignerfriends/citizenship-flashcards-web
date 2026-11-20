@@ -1,6 +1,9 @@
+// I load environment variables so my database connection can use DATABASE_URL.
 import "dotenv/config";
+// I reuse my configured Prisma Client to write the sample data.
 import { prisma } from "../src/lib/prisma";
 
+// I keep the sample categories, URL slugs, questions, and accepted answers together.
 const categories = [
   {
     name: "American Government",
@@ -53,11 +56,14 @@ const categories = [
   },
 ];
 
+// I define the work that runs when I execute this seed script.
 async function main() {
   console.log("Seeding sample civics questions...");
 
+  // I run all seed changes in one transaction so they succeed or roll back together.
   await prisma.$transaction(async (transaction) => {
     for (const seedCategory of categories) {
+      // I create each category if it is new, or update its name when its slug already exists.
       const category = await transaction.category.upsert({
         where: { slug: seedCategory.slug },
         create: {
@@ -68,6 +74,7 @@ async function main() {
       });
 
       for (const seedQuestion of seedCategory.questions) {
+        // I look for a matching question in this category so rerunning the seed does not duplicate it.
         const existingQuestion = await transaction.question.findFirst({
           where: {
             categoryId: category.id,
@@ -76,11 +83,13 @@ async function main() {
         });
 
         if (existingQuestion) {
+          // I refresh the accepted answers when the question already exists.
           await transaction.question.update({
             where: { id: existingQuestion.id },
             data: { answers: seedQuestion.answers },
           });
         } else {
+          // I create the question and connect it to the category I just found or created.
           await transaction.question.create({
             data: {
               ...seedQuestion,
@@ -95,6 +104,7 @@ async function main() {
   console.log("Sample civics questions seeded successfully.");
 }
 
+// I report seed failures and disconnect Prisma when the script finishes.
 main()
   .catch((error: unknown) => {
     console.error("Failed to seed sample civics questions:", error);
