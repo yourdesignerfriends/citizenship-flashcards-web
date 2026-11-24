@@ -6,7 +6,7 @@ To run the app locally, I first install the dependencies with npm install. I con
 
 I created this app because I enjoy programming and above all love serving and helping others. It gives me a practical way to improve my software engineering skills while providing a useful study resource for people preparing for the U.S. Citizenship Civics Test.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://www.youtube.com/watch?v=vKC0jhUhjU4)
 
 # Web Pages
 
