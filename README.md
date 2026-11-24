@@ -8,6 +8,10 @@ I created this app because I enjoy programming and above all love serving and he
 
 [Software Demo Video](https://www.youtube.com/watch?v=vKC0jhUhjU4)
 
+## Additional Resources
+
+[Live Web App](https://citizenship-flashcards-web.vercel.app/)
+
 # Web Pages
 
 I created four main pages for the web app: the Home, Categories, Flashcards, and About pages. I use the navigation bar to move from the Home page to the Categories page, and I use Next.js links to move between pages without a full reload.
